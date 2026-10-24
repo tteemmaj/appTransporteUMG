@@ -67,7 +67,6 @@ public class CiudadDAO {
             
             while (rs.next()) {
                 Ciudad ciudad = new Ciudad();
-                // Asignar los valores obtenidos de MySQL
                 
                 ciudad.setIdCiudad(rs.getInt("idCiudad"));
                 ciudad.setNombre(rs.getString("Nombre"));

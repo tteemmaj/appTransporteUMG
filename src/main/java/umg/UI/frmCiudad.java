@@ -188,7 +188,6 @@ public class frmCiudad extends javax.swing.JFrame {
         CiudadDAO ciudaddao = new CiudadDAO();
         try{
             ciudaddao.insertar(ciudad);
-            //mostrar datos almacenados
             cargarCiudades();
             JOptionPane.showMessageDialog(this, "Datos almacenados correctamente");
             
@@ -214,7 +213,6 @@ public class frmCiudad extends javax.swing.JFrame {
             JOptionPane.showMessageDialog(this, "Datos actualizados correctamente");
             cargarCiudades();
             idCiudad = 0;
-            //Limpiar campos
             txtNombre.setText("");
             txtId.setText("");
             tblCiudad.clearSelection();
@@ -248,7 +246,6 @@ public class frmCiudad extends javax.swing.JFrame {
             try{
                 ciudaddao.eliminar(idCiudad);
                 JOptionPane.showMessageDialog(this, "Ciudad eliminada exitosamente.");
-                //Limpiar campos
                 cargarCiudades();
                 idCiudad = 0;
                 
@@ -267,7 +264,6 @@ public class frmCiudad extends javax.swing.JFrame {
         List<Ciudad> listaCiudades = dao.listar();
         DefaultTableModel modelo = (DefaultTableModel) tblCiudad.getModel();
         
-        // limpiar tabla
         modelo.setRowCount(0);
         
         for (Ciudad c : listaCiudades) {

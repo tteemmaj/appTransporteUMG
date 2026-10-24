@@ -18,7 +18,7 @@ public class frmCamionero extends javax.swing.JFrame {
     }
     private void cargarCamioneros() {
         DefaultTableModel modelo = (DefaultTableModel) tblCamionero.getModel();
-        modelo.setRowCount(0); // Limpiar filas
+        modelo.setRowCount(0);
 
         CamioneroDAO dao = new CamioneroDAO();
         try {

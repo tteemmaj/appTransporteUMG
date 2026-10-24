@@ -24,7 +24,6 @@ public class frmConductorCamion extends javax.swing.JFrame {
     
     public void cargarDesplegables() {
         try {
-            // Cargar Camioneros en cbConductor
             CamioneroDAO camioneroDAO = new CamioneroDAO();
             List<Camionero> listaCamioneros = camioneroDAO.obtenerTodos();
             cbConductor.removeAllItems();
@@ -44,7 +43,6 @@ public class frmConductorCamion extends javax.swing.JFrame {
                 }
             });
 
-            // Cargar Camiones en cbCamion
             CamionDAO camionDAO = new CamionDAO();
             List<Camion> listaCamiones = camionDAO.obtenerTodos();
             cbCamion.removeAllItems();

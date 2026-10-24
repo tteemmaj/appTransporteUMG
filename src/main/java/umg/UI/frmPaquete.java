@@ -31,28 +31,26 @@ public class frmPaquete extends javax.swing.JFrame {
             }
         });
 
-        // --- 2. CONFIGURACIÓN DEL RENDERIZADOR PARA CIUDADES ---
         cbCiudad.setRenderer(new DefaultListCellRenderer() {
             @Override
             public Component getListCellRendererComponent(JList<?> list, Object value, int index, boolean isSelected, boolean cellHasFocus) {
                 super.getListCellRendererComponent(list, value, index, isSelected, cellHasFocus);
                 if (value instanceof Ciudad) {
                     Ciudad ciu = (Ciudad) value;
-                    setText(ciu.getNombre()); // Muestra solo el Nombre de la Ciudad
+                    setText(ciu.getNombre()); 
                 }
                 return this;
             }
         });
 
-        // --- 3. CARGAR LOS DATOS EN LOS DESPLEGABLES ---
         cargarDesplegables();
-        cargarPaquetes(); // Carga la tabla al abrir la interfaz
+        cargarPaquetes(); 
         limpiarCampos();
         
     }
     private void cargarPaquetes() {
     DefaultTableModel modelo = (DefaultTableModel) tblPaquete.getModel();
-    modelo.setRowCount(0); // Limpia las filas previas
+    modelo.setRowCount(0);
 
     PaqueteDAO dao = new PaqueteDAO();
     CamioneroDAO camioneroDAO = new CamioneroDAO();
@@ -62,7 +60,6 @@ public class frmPaquete extends javax.swing.JFrame {
         List<Paquete> lista = dao.obtenerTodos();
 
         for (Paquete p : lista) {
-            // Buscar nombre del Camionero
             String nombreCamionero = "Sin asignar";
             if (p.getCamionero() != null) {
                 Camionero c = camioneroDAO.buscarPorId(p.getCamionero().getIdCamionero());
@@ -71,7 +68,6 @@ public class frmPaquete extends javax.swing.JFrame {
                 }
             }
 
-            // Buscar nombre de la Ciudad
             String nombreCiudad = "Sin asignar";
             if (p.getCiudad() != null) {
                 List<Ciudad> ciudades = ciudadDAO.listar();
@@ -83,7 +79,6 @@ public class frmPaquete extends javax.swing.JFrame {
                 }
             }
 
-            // Agregar la fila a la tabla
             modelo.addRow(new Object[]{
                 p.getIdPaquete(),
                 p.getDescripcion(),
@@ -117,7 +112,6 @@ public class frmPaquete extends javax.swing.JFrame {
     
     public void cargarDesplegables() {
         try {
-            // Cargar Camioneros
             CamioneroDAO camioneroDAO = new CamioneroDAO();
             List<Camionero> listaCamioneros = camioneroDAO.obtenerTodos();
             cbCamionero.removeAllItems();
@@ -125,7 +119,6 @@ public class frmPaquete extends javax.swing.JFrame {
                 cbCamionero.addItem(c);
             }
 
-            // Cargar Ciudades
             CiudadDAO ciudadDAO = new CiudadDAO();
             List<Ciudad> listaCiudades = ciudadDAO.listar();
             cbCiudad.removeAllItems();
@@ -411,17 +404,15 @@ public class frmPaquete extends javax.swing.JFrame {
         JOptionPane.showMessageDialog(this, "Error al actualizar en la Base de Datos: " + exp.getMessage(), "Error SQL", JOptionPane.ERROR_MESSAGE);
     }
     }//GEN-LAST:event_btnActualizarActionPerformed
-
+    
     private void btnInsertarActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_btnInsertarActionPerformed
         // TODO add your handling code here:
         try {
-            // Validar campos obligatorios
             if (txtId.getText().trim().isEmpty() || txtDescripcion.getText().trim().isEmpty()) {
                 JOptionPane.showMessageDialog(this, "El ID y la Descripción son obligatorios.");
                 return;
             }
 
-            // Obtener elementos seleccionados
             Camionero camioneroSel = (Camionero) cbCamionero.getSelectedItem();
             Ciudad ciudadSel = (Ciudad) cbCiudad.getSelectedItem();
 
@@ -430,7 +421,6 @@ public class frmPaquete extends javax.swing.JFrame {
                 return;
             }
 
-            // Construir el objeto Paquete
             Paquete p = new Paquete();
             p.setIdPaquete(Integer.parseInt(txtId.getText().trim()));
             p.setDescripcion(txtDescripcion.getText().trim());
@@ -443,7 +433,6 @@ public class frmPaquete extends javax.swing.JFrame {
             p.setCamionero(camioneroSel);
             p.setCiudad(ciudadSel);
 
-            // Guardar en la BD
             PaqueteDAO dao = new PaqueteDAO();
             dao.insertar(p);
 
@@ -476,7 +465,6 @@ public class frmPaquete extends javax.swing.JFrame {
             txtDireccion.setText(p.getDireccion() != null ? p.getDireccion() : "");
             txtPeso.setText(p.getPeso() != null ? String.valueOf(p.getPeso()) : "");
 
-            // Seleccionar el Camionero en el ComboBox según el ID obtenido
             if (p.getCamionero() != null) {
                 for (int i = 0; i < cbCamionero.getItemCount(); i++) {
                     Object item = cbCamionero.getItemAt(i);
@@ -487,7 +475,6 @@ public class frmPaquete extends javax.swing.JFrame {
                 }
             }
 
-            // Seleccionar la Ciudad en el ComboBox según el ID obtenido
             if (p.getCiudad() != null) {
                 for (int i = 0; i < cbCiudad.getItemCount(); i++) {
                     Object item = cbCiudad.getItemAt(i);
@@ -547,20 +534,17 @@ public class frmPaquete extends javax.swing.JFrame {
         int fila = tblPaquete.getSelectedRow();
     if (fila >= 0) {
         try {
-            // 1. Asignar los campos de texto directamente con los datos de la fila
             txtId.setText(tblPaquete.getValueAt(fila, 0).toString());
             txtDescripcion.setText(tblPaquete.getValueAt(fila, 1) != null ? tblPaquete.getValueAt(fila, 1).toString() : "");
             txtDestinatario.setText(tblPaquete.getValueAt(fila, 2) != null ? tblPaquete.getValueAt(fila, 2).toString() : "");
             txtPeso.setText(tblPaquete.getValueAt(fila, 3) != null ? tblPaquete.getValueAt(fila, 3).toString() : "");
             txtDireccion.setText(tblPaquete.getValueAt(fila, 4) != null ? tblPaquete.getValueAt(fila, 4).toString() : "");
 
-            // 2. Buscar las llaves foráneas en la BD para seleccionar los elementos correspondientes en los JComboBox
             int idPaquete = Integer.parseInt(txtId.getText().trim());
             PaqueteDAO dao = new PaqueteDAO();
             Paquete p = dao.buscarPorId(idPaquete);
 
             if (p != null) {
-                // Seleccionar el Camionero en el ComboBox
                 if (p.getCamionero() != null) {
                     for (int i = 0; i < cbCamionero.getItemCount(); i++) {
                         Object item = cbCamionero.getItemAt(i);
@@ -571,7 +555,6 @@ public class frmPaquete extends javax.swing.JFrame {
                     }
                 }
 
-                // Seleccionar la Ciudad en el ComboBox
                 if (p.getCiudad() != null) {
                     for (int i = 0; i < cbCiudad.getItemCount(); i++) {
                         Object item = cbCiudad.getItemAt(i);

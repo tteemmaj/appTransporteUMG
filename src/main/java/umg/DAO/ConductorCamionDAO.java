@@ -101,14 +101,12 @@ public class ConductorCamionDAO {
                 cc.setIdConductorCamion(rs.getInt("idCamioneroCamion"));
                 cc.setFecha(rs.getString("Fecha"));
 
-                // Mapear y asociar el objeto Camionero
                 int idCamionero = rs.getInt("idCamionero");
                 if (!rs.wasNull()) {
                     Camionero c = camioneroDAO.buscarPorId(idCamionero);
                     cc.setConductor(c);
                 }
 
-                // Mapear y asociar el objeto Camion
                 int idCamion = rs.getInt("idCamion");
                 if (!rs.wasNull()) {
                     Camion camion = camionDAO.buscarPorId(idCamion);

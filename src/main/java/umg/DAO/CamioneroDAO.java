@@ -81,7 +81,7 @@ public class CamioneroDAO {
             Camionero c = new Camionero();
             c.setIdCamionero(rs.getInt("idCamionero"));
             c.setNombre(rs.getString("Nombre"));
-            c.setApellido(rs.getString("Apellido")); // <--- Cambiado a "Apellido" (singular)
+            c.setApellido(rs.getString("Apellido")); 
             c.setDireccion(rs.getString("Direccion"));
             c.setSalario(rs.getDouble("Salario"));
             c.setPoblacion(rs.getString("Poblacion"));
@@ -106,7 +106,7 @@ public class CamioneroDAO {
                 c = new Camionero();
                 c.setIdCamionero(rs.getInt("idCamionero"));
                 c.setNombre(rs.getString("Nombre"));
-                c.setApellido(rs.getString("Apellido")); // <--- Cambiado a "Apellido" (singular)
+                c.setApellido(rs.getString("Apellido")); 
                 c.setDireccion(rs.getString("Direccion"));
                 c.setSalario(rs.getDouble("Salario"));
                 c.setPoblacion(rs.getString("Poblacion"));
